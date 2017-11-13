@@ -31,9 +31,9 @@ The key to making this project plausible for one person seems to lie in choosing
 * Templates
 * Tests
 
-Unfortunately this list is hilariously expansive. It could cover almost everything in Django if interpreted loosely.
+Unfortunately this list is hilariously expansive. It could cover almost everything in Django.
 
-Some of the only things glaringly absent from this list are Django settings files and the `manage` commands. And while I will need some bits of each of the above features, Django is made to support many wildly different, and much bigger, projects. For instance, there are *lots* of built-in Django Field types. In fact, 27 are documented in the official [Django 1.11 Field docs](https://docs.djangoproject.com/en/1.8/ref/models/fields/) alone.
+Some of the only things glaringly absent from this list are Django settings files, user accounts/authorization, admin, and `manage` commands. And while I will need some bits of each of the above features, Django is made to support many wildly different, and much bigger, projects. For instance, there are *lots* of built-in Django Field types. In fact, 27 are documented in the official [Django 1.11 Field docs](https://docs.djangoproject.com/en/1.8/ref/models/fields/) alone.
 
 So this this list needs to be narrowed down to the parts of each feature I actually need.
 

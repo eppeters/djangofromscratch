@@ -19,5 +19,5 @@ from blog.views import homepage
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^$', homepage),
+    url(r'^$', homepage, name='homepage'),
 ]

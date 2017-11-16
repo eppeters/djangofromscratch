@@ -66,3 +66,9 @@ Docker will be useful in helping me create an image that runs the same Nginx/Gun
 # The source code
 
 I am tracking this whole thing in a git repository hosted on GitHub [here](https://github.com/eppeters/djangofromscratch).
+
+# Getting started
+
+The only thing I need to get started is a name, and I think I'll take a page out of the Django creators' early book. They supposedly named Django after their favorite jazz guitarist, Django Reinhardt, so I will name my Django after *my* favorite jazz guitarist, Wes Montgomery. And thus, Wes was born. Or will be.
+
+

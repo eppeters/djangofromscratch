@@ -103,12 +103,12 @@
     {% autoescape off %}
     {{ content }}
     {% endautoescape %}
-    <h1>Add comment</h1>
+    <h2>Add comment</h2>
     <form method="POST">
       {{ form }}
       <input type="submit" />
     </form>
-    <h1>Comments</h1>
+    <h2>Comments</h2>
     {% for comment in comments %}
     <hr />
     <article class="comment">

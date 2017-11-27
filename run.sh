@@ -48,6 +48,6 @@ if [[ "${BASH_SOURCE[0]}" = "$0" ]]; then
         popd
         exit
     fi
-
+    heroku config:set DISABLE_COLLECTSTATIC=1 -a "$app"
     git subtree push --prefix "$app" "heroku-$app" master
 fi

@@ -29,7 +29,7 @@ def handle_homepage_post(request):
 
 def handle_homepage_get(request):
     content_html = BytesIO()
-    markdown.markdownFromFile('{}/../README.md'.format(settings.BASE_DIR), content_html)
+    markdown.markdownFromFile('{}/README.md'.format(settings.BASE_DIR), content_html)
     content_html = content_html.getvalue().decode('UTF-8')
     comments = Comment.objects.order_by('-id').all()
     context = { 'content':  content_html, 'form': CommentForm(), 'comments': comments, 'framework': 'Django' }

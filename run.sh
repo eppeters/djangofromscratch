@@ -7,7 +7,7 @@ IFS=$'\n\t'
 #/ Examples: run dfsdjango
 #/ Options:
 #/   --help: Display this help message
-#/   -t|--test: Run locally instead of deploying.
+#/   -d|--dev: Run locally for development instead of deploying.
 usage() { grep '^#/' "$0" | cut -c4- ; exit 0 ; }
 expr "$*" : ".*--help" > /dev/null && usage
 
@@ -30,8 +30,8 @@ do
 key="$1"
 
 case $key in
-    -t|--test)
-    is_test=true
+    -d|--dest)
+    is_dev=true
     ;;
     *)
         fatal "Unknown option: $key"
@@ -41,13 +41,13 @@ shift # past argument or value
 done
 
 if [[ "${BASH_SOURCE[0]}" = "$0" ]]; then
-    if ${is_test:-false}; then
-        cmd="heroku local"
+    if ${is_dev:-false}; then
+        cmd="heroku local -f Procfile.dev"
         pushd "$app"
         eval "$cmd"
         popd
         exit
     fi
     heroku config:set DISABLE_COLLECTSTATIC=1 -a "$app"
-    git subtree push --prefix "$app" "heroku-$app" master
+    git subtree push --force --prefix "$app" "heroku-$app" master
 fi

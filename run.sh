@@ -19,12 +19,13 @@ warning() { echo "[WARNING] $@" | tee -a "$LOG_FILE" >&2 ; }
 error()   { echo "[ERROR]   $@" | tee -a "$LOG_FILE" >&2 ; }
 fatal()   { echo "[FATAL]   $@" | tee -a "$LOG_FILE" >&2 ; exit 1 ; }
 
-set +euo
+export PYENV_VIRTUALENV_DISABLE_PROMPT=1
+set +euo > /dev/null
 eval "$(pyenv init -)"
 if pyenv commands | command grep -q virtualenv-init; then
     eval "$(pyenv virtualenv-init -)"
 fi
-set -euo
+set -euo > /dev/null
 
 app=$1
 shift
@@ -48,9 +49,9 @@ done
 
 eval_app_cmd() {
     pushd "$1"
-    set +euo
+    set +euo > /dev/null
     pyenv activate
-    set -euo
+    set -euo > /dev/null
     info "Activated virtualenv: $PYENV_VIRTUAL_ENV"
     eval "$2"
     return_val=$?

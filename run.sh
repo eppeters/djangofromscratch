@@ -27,7 +27,10 @@ if pyenv commands | command grep -q virtualenv-init; then
 fi
 set -euo > /dev/null
 
-app=$1
+app=${1:-}
+if [[ ! "$app" ]]; then
+    usage
+fi
 shift
 while [[ $# -gt 0 ]]
 do

@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 IFS=$'\n\t'
+APPS="dfswes dfsdjango"
 
 #/ Usage: <script> APP [options]
 #/ Description: Deploy to heroku, or test locally.
@@ -31,6 +32,10 @@ app=${1:-}
 if [[ ! "$app" ]]; then
     usage
 fi
+
+if [[ ! $APPS = *"$app"* ]]; then
+    fatal "APP must be from list: $APPS"
+fi
 shift
 while [[ $# -gt 0 ]]
 do
@@ -39,6 +44,9 @@ key="$1"
 case $key in
     -t|--test)
         is_test=true
+    ;;
+    -a|--acceptance-tests)
+        is_acceptance_tests=true
     ;;
     -d|--dest)
         is_dev=true
@@ -49,6 +57,18 @@ case $key in
 esac
 shift # past argument or value
 done
+
+if [[ ${is_acceptance_tests:-false} && ! ${is_test:-false} ]]; then
+    fatal "The flag --acceptance-tests (-a) is valid only alongside the --test (-t) flag."
+fi
+
+app_port() {
+    if [[ "$1" == "dfsdjango" ]]; then
+        echo 5000
+    else
+        echo 5001
+    fi
+}
 
 eval_app_cmd() {
     pushd "$1"
@@ -64,7 +84,11 @@ eval_app_cmd() {
 
 if [[ "${BASH_SOURCE[0]}" = "$0" ]]; then
     if ${is_dev:-false}; then
-        eval_app_cmd "$app" "heroku local -f Procfile.dev"
+        eval_app_cmd "$app" "heroku local -f Procfile.dev -p $(app_port "$app")"
+    fi
+    if [[ ${is_test:-false} && ${is_acceptance_tests:-false} ]]; then
+        pytest tests/acceptance/
+        exit $?
     fi
     if ${is_test:-false}; then
         eval_app_cmd "$app" "pytest tests/"
